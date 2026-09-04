@@ -1,3 +1,4 @@
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 
@@ -11,11 +12,14 @@ spec:
   source:
     repoURL: https://github.com/muhammadshahid3/my_portfolio.git
     targetRevision: main
-    path: helm/static-app
+    path: k8s
+
+    directory:
+      recurse: true
 
   destination:
     server: https://kubernetes.default.svc
-    namespace: static-web-apps
+    namespace: static-web-app
 
   syncPolicy:
     automated:
