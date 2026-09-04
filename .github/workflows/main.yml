@@ -1,0 +1,37 @@
+# name: "hello world"
+
+# on:
+#   push:
+#     branches:
+#       - main
+
+# jobs:
+#   hello_world_job:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Hello World Step
+#         run: echo "Hello, World!"
+#       - name: show current user
+#         run: whoami
+#       - name: show current directory
+#         run: pwd
+
+#   job2:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Hello World Step  # multiple commands ek sath run karne ke liye pipe (|) sign
+#         run: |
+#           echo "Hello, World!"
+#           whoami
+#           pwd
+
+#   job3:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: codecheck  # Github Actions Marketplace se code checkout karne ke liye
+#         uses: actions/checkout@v4   
+#       - name: Hello World Step  # checkout ke baad commands run hongi
+#         run: |
+#           echo "Hello, World!"
+#           whoami
+#           pwd     

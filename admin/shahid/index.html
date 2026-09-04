@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin Panel — M. Shahid Portfolio</title>
+<meta name="robots" content="noindex, nofollow" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="admin.css" />
+</head>
+<body>
+
+<!-- ═══════════════ LOGIN SCREEN ═══════════════ -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="lock-icon">🔒</div>
+    <h1>Admin Panel</h1>
+    <p class="sub">M. Shahid Portfolio — Content Manager</p>
+    <form id="loginForm">
+      <input type="password" id="passInput" placeholder="Enter admin password" autocomplete="current-password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div class="login-error" id="loginError">Galat password. Dobara try karein.</div>
+    <div class="login-note">
+      Default password: <strong>shahid123</strong> — login ke baad Settings tab se ise change kar sakte hain.
+    </div>
+    <a href="../../index.html" class="back-home">← Back to Portfolio</a>
+  </div>
+</div>
+
+<!-- ═══════════════ APP SHELL ═══════════════ -->
+<div id="appScreen">
+
+  <aside class="sidebar">
+    <div class="sidebar-logo">Shahid<span>.</span> Admin</div>
+    <div class="sidebar-sub">Content Manager</div>
+
+    <nav class="side-nav">
+      <button class="side-btn active" data-tab="projects">📁 Projects</button>
+      <button class="side-btn" data-tab="skills">🛠️ Skills</button>
+      <button class="side-btn" data-tab="settings">⚙️ Settings</button>
+    </nav>
+
+    <div class="side-foot">
+      <a href="../../index.html" class="side-link" target="_blank">↗ View Live Site</a>
+      <button class="logout-btn" id="logoutBtn">Logout</button>
+    </div>
+  </aside>
+
+  <main class="main-panel">
+
+    <!-- ───────── PROJECTS TAB ───────── -->
+    <section class="tab-view active" id="tab-projects">
+      <div class="panel-header">
+        <div>
+          <h1>Projects</h1>
+          <p>Yahan se project add/edit/delete karein — turant portfolio ke Projects section mein mount ho jayega.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3 id="projFormTitle">Add New Project</h3>
+        <form id="projectForm">
+          <div class="form-grid">
+            <div class="field full">
+              <label>Project Title</label>
+              <input type="text" id="projTitle" placeholder="e.g. Dockerized Django Job Portal" required />
+            </div>
+
+            <div class="field full">
+              <label>Description</label>
+              <textarea id="projDesc" rows="3" placeholder="Project ke baare mein short description..." required></textarea>
+            </div>
+
+            <div class="field">
+              <label>Upload Image</label>
+              <input type="file" id="projImageFile" accept="image/*" />
+            </div>
+
+            <div class="field">
+              <label>OR Image URL</label>
+              <input type="url" id="projImageUrl" placeholder="https://... (optional)" />
+            </div>
+
+            <div class="field full">
+              <img id="imgPreview" class="img-preview" alt="Preview" />
+            </div>
+
+            <div class="field full">
+              <label>Tags (comma separated)</label>
+              <input type="text" id="projTags" placeholder="Docker, Terraform, Kubernetes" />
+            </div>
+
+            <div class="field full">
+              <label>Category (filter tabs ke liye)</label>
+              <div class="checkbox-row">
+                <label><input type="checkbox" class="projCatCheck" value="docker" /> Docker</label>
+                <label><input type="checkbox" class="projCatCheck" value="cicd" /> CI/CD</label>
+                <label><input type="checkbox" class="projCatCheck" value="web" /> Web</label>
+                <label><input type="checkbox" class="projCatCheck" value="terraform" /> Terraform</label>
+                <label><input type="checkbox" class="projCatCheck" value="kubernetes" /> Kubernetes</label>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>GitHub Link</label>
+              <input type="url" id="projGithub" placeholder="https://github.com/..." />
+            </div>
+
+            <div class="field">
+              <label>Live Demo Link</label>
+              <input type="url" id="projLive" placeholder="https://..." />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="projSubmitBtn">Add Project</button>
+            <button type="button" class="btn btn-outline" id="projCancelBtn" style="display:none;">Cancel Edit</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Existing Projects</h3>
+        <div class="item-list" id="projectList"></div>
+      </div>
+    </section>
+
+    <!-- ───────── SKILLS TAB ───────── -->
+    <section class="tab-view" id="tab-skills">
+      <div class="panel-header">
+        <div>
+          <h1>Skills</h1>
+          <p>Skill categories aur har skill ka percentage manage karein — Technical Skills section mein live mount hoga.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Add New Category</h3>
+        <div class="add-skill-row">
+          <input type="text" id="newCatName" placeholder="e.g. Infrastructure as Code" />
+          <button class="btn btn-primary" id="addCatBtn">+ Add Category</button>
+        </div>
+      </div>
+
+      <div id="skillManager"></div>
+    </section>
+
+    <!-- ───────── SETTINGS TAB ───────── -->
+    <section class="tab-view" id="tab-settings">
+      <div class="panel-header">
+        <div>
+          <h1>Settings</h1>
+          <p>Password, backup aur reset options.</p>
+        </div>
+      </div>
+
+      <div class="hint-box">
+        ⚠️ <strong>Zaroori baat:</strong> Ye ek static site hai (koi real server/database nahi), isliye ye data sirf
+        <strong>isi browser</strong> mein save hota hai (localStorage). Har visitor ko ye changes globally dikhane ke liye:
+        "Export JSON" karein → us file se <code>data.js</code> ke andar DEFAULT_PROJECTS / DEFAULT_SKILLS update karein →
+        GitHub par push/deploy karein. Tab wo data permanently sabko dikhega.
+      </div>
+
+      <div class="card">
+        <h3>Change Admin Password</h3>
+        <form id="changePassForm">
+          <div class="field">
+            <label>New Password</label>
+            <input type="text" id="newPassInput" placeholder="New password (min 4 chars)" />
+          </div>
+          <button type="submit" class="btn btn-primary">Update Password</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>Backup & Restore</h3>
+        <div class="form-actions" style="flex-wrap: wrap;">
+          <button class="btn btn-outline" id="exportBtn">⬇ Export JSON</button>
+          <label class="btn btn-outline" for="importFile" style="cursor:pointer;">⬆ Import JSON</label>
+          <input type="file" id="importFile" accept="application/json" style="display:none;" />
+          <button class="btn btn-danger" id="resetBtn">Reset to Defaults</button>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<div id="toast"></div>
+
+<script src="../../data.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>
